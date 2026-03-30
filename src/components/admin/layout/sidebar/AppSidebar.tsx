@@ -22,6 +22,10 @@ const links = {
 			title: 'Inventory',
 			url: '/admin/inventory',
 		},
+		{
+			title: 'Orders',
+			url: '/admin/orders',
+		},
 	],
 };
 
