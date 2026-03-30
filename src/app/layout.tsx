@@ -1,4 +1,3 @@
-import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import SyncClerkWithSupabase from '@/components/auth/SyncClerkWithSupabase';

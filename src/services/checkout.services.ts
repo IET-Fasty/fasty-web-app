@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase/client';
 import type { RoomNumber } from '@/types/checkout.types';
 
 export const PlaceOrder = async (
