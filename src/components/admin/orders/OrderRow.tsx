@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
 import { OrderWithDetails } from '@/types/admin.types';
-import { verifyDeliveryOtp, updateOrderStatus } from '@/services/admin/orders.services';
+import { updateOrderStatus } from '@/services/admin/orders.services';
 import {
 	Dialog,
 	DialogContent,
@@ -105,8 +105,6 @@ const VerifyOtpDialog = ({ orderId, expectedOtp, onVerified }: VerifyOtpDialogPr
 
 		setIsVerifying(true);
 		try {
-			// 1. Mark OTP as verified in delivery_otps table
-			await verifyDeliveryOtp(orderId);
 			// 2. Set order status to 'delivered'
 			await updateOrderStatus(orderId, 'delivered');
 			onVerified();
@@ -207,15 +205,6 @@ const OrderRow = ({ serialNo, order }: OrderRowProps) => {
 
 				{/* Actions */}
 				<div className="flex items-center gap-2 justify-end">
-					{/* OTP verify — only shown when status is 'paid' and OTP exists */}
-					{status === 'paid' && order.delivery_otp && (
-						<VerifyOtpDialog
-							orderId={order.id}
-							expectedOtp={order.delivery_otp.otp_code}
-							onVerified={handleVerified}
-						/>
-					)}
-
 					{/* Expand items toggle */}
 					<Button
 						variant="ghost"
