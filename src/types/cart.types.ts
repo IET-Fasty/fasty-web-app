@@ -13,4 +13,5 @@ export interface Cart {
 	removeItem: (id: string) => void;
 	updateQuantity: (id: string, quantity: number) => void;
 	clearCart: () => void;
+	getTotal: () => number;
 }
