@@ -17,12 +17,9 @@ import { billAmount, getItemsCount } from '@/utils/cart.utils';
 import { SummaryTable } from '../checkout/OrderSummary';
 import { NoRefundNotice } from '../checkout/NoRefundNotice';
 import { CheckoutForm } from '../checkout/CheckOutForm';
+import CartButton from '../navbar/CartButton';
 
-interface SheetSideProps {
-	children: React.ReactNode;
-}
-
-export default function SheetSide({ children }: SheetSideProps) {
+export default function SheetSide() {
 	const {
 		sheetStatus,
 		setSheetStatus,
@@ -37,7 +34,9 @@ export default function SheetSide({ children }: SheetSideProps) {
 	return (
 		<div className="flex flex-wrap gap-2">
 			<Sheet>
-				<SheetTrigger>{children}</SheetTrigger>
+				<SheetTrigger asChild>
+					<CartButton />
+				</SheetTrigger>
 
 				{sheetStatus === 'cart' ? (
 					<SheetContent

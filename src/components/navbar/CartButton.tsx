@@ -1,10 +1,13 @@
+'use client';
+
 import { ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import useCartStore from '@/store/cart.store';
 import { getItemsCount } from '@/utils/cart.utils';
+import { ComponentProps } from 'react';
 
-export default function CartButton() {
+export default function CartButton({ ...props }: ComponentProps<typeof Button>) {
 	const { items } = useCartStore();
 	const itemCount = getItemsCount(items);
 
@@ -13,6 +16,7 @@ export default function CartButton() {
 			variant="ghost"
 			size="icon"
 			className="relative border border-gray-200 rounded-md hover:bg-gray-100"
+			{...props}
 		>
 			<ShoppingCart className="h-5 w-5" />
 			{itemCount > 0 && (
