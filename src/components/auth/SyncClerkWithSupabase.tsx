@@ -35,7 +35,7 @@ const SyncClerkWithSupabase = () => {
 		};
 
 		sync();
-	}, [isLoaded, isSignedIn, user]);
+	}, [isLoaded, isSignedIn, user?.id]);
 
 	return <WrongEmailPopup open={showPopup} onClose={() => setShowPopup(false)} />;
 };
