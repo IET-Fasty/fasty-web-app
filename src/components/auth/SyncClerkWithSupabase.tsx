@@ -21,21 +21,25 @@ const SyncClerkWithSupabase = () => {
 
 			if (isEmailAllowed(email)) {
 				await syncProfile({
-					id: user.id,
-					email: email,
-					first_name: user.firstName ?? '',
-					last_name: user.lastName ?? '',
-					image_url: user.imageUrl ?? '',
+					clerkId: user.id,
+					email,
+					firstName: user.firstName ?? '',
+					lastName: user.lastName ?? '',
+					imageUrl: user.imageUrl ?? '',
 				});
 			} else {
 				setShowPopup(true);
-				await user?.delete();
-				await signOut();
+
+				try {
+					await user?.delete();
+				} finally {
+					await signOut();
+				}
 			}
 		};
 
 		sync();
-	}, [isLoaded, isSignedIn, user]);
+	}, [isLoaded, isSignedIn, user?.id]);
 
 	return <WrongEmailPopup open={showPopup} onClose={() => setShowPopup(false)} />;
 };

@@ -27,9 +27,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<SyncClerkWithSupabase />
 					<Navbar />
 					{children}
-					<Analytics />
-					<SpeedInsights />
 				</ClerkProvider>
+				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	);
