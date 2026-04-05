@@ -17,7 +17,7 @@ export default function AddToCart({ product }: AddToCartProps) {
 
 	const handleAddItem = () => {
 		const item = {
-			product_id: id,
+			productId: id,
 			name,
 			image: imageUrl,
 			price,

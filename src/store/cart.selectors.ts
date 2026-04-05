@@ -8,5 +8,5 @@ export const useCartCount = () =>
 
 export const useItemQuantity = (productId: string) =>
 	useCartStore(
-		(state) => state.items.find((item) => item.product_id === productId)?.quantity ?? 0
+		(state) => state.items.find((item) => item.productId === productId)?.quantity ?? 0
 	);

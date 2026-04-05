@@ -15,12 +15,14 @@ const useCartStore = create<Cart>()(
 
 			removeItem: (id: string) =>
 				set((state) => ({
-					items: state.items.filter((i) => i.product_id !== id),
+					items: state.items.filter((item) => item.productId !== id),
 				})),
 
 			updateQuantity: (id: string, quantity: number) =>
 				set((state) => ({
-					items: state.items.map((i) => (i.product_id === id ? { ...i, quantity } : i)),
+					items: state.items.map((item) =>
+						item.productId === id ? { ...item, quantity } : item
+					),
 				})),
 
 			clearCart: () =>
