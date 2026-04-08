@@ -10,10 +10,10 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
-import { ROOM_NUMBERS } from '@/constants/allowedRooms';
+import { ROOM_NUMBERS } from '@/lib/constants';
 import { isRoomNoValid } from '@/utils/checkout.utils';
 import { useUser } from '@clerk/nextjs';
-import { profileIdFromClerkId, PlaceOrder, insertOrderItems } from '@/services/checkout.services';
+import { profileIdFromClerkId, placeOrder, insertOrderItems } from '@/services/checkout.services';
 import useCartStore from '@/store/cart.store';
 import { useCartCount, useCartTotal } from '@/store/cart.selectors';
 
@@ -72,10 +72,10 @@ export const CheckoutForm = ({
 		setLoading(true);
 		try {
 			const id = await profileIdFromClerkId(user.id);
-			const orderId = await PlaceOrder(pendingData.roomNo, id, total);
+			const orderId = await placeOrder(pendingData.roomNo, id, total);
 			await Promise.all(
-				items.map(({ product_id, quantity, price }) =>
-					insertOrderItems(orderId, product_id, quantity, price, quantity * price)
+				items.map(({ productId, quantity, price }) =>
+					insertOrderItems(orderId, productId, quantity, price, quantity * price)
 				)
 			);
 			setPlacedOrderId(orderId); // ← save orderId
