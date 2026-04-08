@@ -1,4 +1,4 @@
-import { ROOM_NUMBERS } from '@/constants/allowedRooms';
+import { ROOM_NUMBERS } from '@/lib/constants';
 
 export type RoomNumber = (typeof ROOM_NUMBERS)[number];
 export type PlaceOrderParams = {
