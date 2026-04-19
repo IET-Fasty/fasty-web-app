@@ -13,7 +13,8 @@
 		"test": "vitest",
 		"test:run": "vitest run",
 		"test:ui": "vitest --ui",
-		"prepare": "husky"
+		"prepare": "husky",
+		"gen:types": "supabase gen types typescript --project-id xmilcbzxgstsgasraceh > src/types/supabase.ts"
 	},
 	"lint-staged": {
 		"*.{ts,tsx,js,jsx}": [
