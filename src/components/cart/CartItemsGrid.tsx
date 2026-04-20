@@ -9,7 +9,7 @@ export default function CartItemsGrid() {
 	if (items.length === 0) return <CartEmpty />;
 
 	return (
-		<div className="flex flex-col overflow-y-auto">
+		<div className="flex flex-col overflow-y-auto overflow-x-hidden">
 			{items.map((item) => (
 				<CartItem key={item.productId} {...item} />
 			))}

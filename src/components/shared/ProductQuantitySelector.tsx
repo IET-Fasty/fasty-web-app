@@ -22,7 +22,9 @@ const ProductQuantitySelector = ({ quantity, stock, productId }: ProductQuantity
 			>
 				-
 			</Button>
-			<Button variant="outline">{quantity}</Button>
+			<Button variant="outline" className="text-xs">
+				{quantity}
+			</Button>
 			<Button
 				variant="outline"
 				disabled={quantity >= stock}

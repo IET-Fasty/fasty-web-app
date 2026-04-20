@@ -9,8 +9,6 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
 import CartItemsGrid from './CartItemsGrid';
 import CartSummary from './CartSummary';
 import useSheetFlow from '@/hooks/useSheetFlow';
@@ -21,6 +19,7 @@ import { CheckoutForm } from '../checkout/CheckOutForm';
 import CartButton from '../navbar/CartButton';
 import { useCartCount, useCartTotal } from '@/store/cart.selectors';
 import { useState } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function CartSheet() {
 	const {
@@ -47,6 +46,8 @@ export default function CartSheet() {
 		setSheetStatus('cart');
 	};
 
+	const isMobile = useIsMobile();
+
 	return (
 		<div className="flex flex-wrap gap-2">
 			<Sheet open={open} onOpenChange={onOpenChange}>
@@ -57,7 +58,7 @@ export default function CartSheet() {
 				{sheetStatus === 'cart' ? (
 					<SheetContent
 						side="right"
-						className="p-0 data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh]"
+						className={`p-0 data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh] ${isMobile ? 'w-full' : ''}`}
 					>
 						<SheetHeader>
 							<SheetTitle>My Cart</SheetTitle>
@@ -66,14 +67,14 @@ export default function CartSheet() {
 
 						<CartItemsGrid />
 
-						<SheetFooter>
+						<SheetFooter className="px-2 pb-3 pt-0">
 							<CartSummary setSheetStatus={setSheetStatus} />
 						</SheetFooter>
 					</SheetContent>
 				) : sheetStatus === 'checkout' ? (
 					<SheetContent
 						side="right"
-						className="p-0 data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh]"
+						className={`p-0 data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh] ${isMobile ? 'w-full' : ''}`}
 					>
 						<SheetHeader>
 							<SheetTitle>Checkout</SheetTitle>
@@ -96,10 +97,8 @@ export default function CartSheet() {
 				) : (
 					<SheetContent
 						side="right"
-						className="p-0 data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh]"
+						className={`p-0 data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh] ${isMobile ? 'w-full' : ''}`}
 					>
-						<SheetHeader></SheetHeader>
-
 						<OrderPlaced
 							orderId={placedOrderId}
 							roomNo={pendingData?.roomNo ?? ''}
