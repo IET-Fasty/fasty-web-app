@@ -7,12 +7,14 @@ export const OrderPlaced = ({
 	totalAmount,
 	itemCount,
 	setSheetStatus,
+	closeSheet,
 }: {
 	orderId: string;
 	roomNo: string;
 	totalAmount: number;
 	itemCount: number;
 	setSheetStatus: (sheetStatus: 'cart') => void;
+	closeSheet: () => void;
 }) => {
 	const [step, setStep] = useState(0);
 	const { clearCart } = useCartStore();
@@ -30,6 +32,7 @@ export const OrderPlaced = ({
 	const handleBackToHome = () => {
 		clearCart();
 		setSheetStatus('cart');
+		closeSheet();
 	};
 
 	return (
@@ -193,7 +196,7 @@ export const OrderPlaced = ({
 					(e.target as HTMLButtonElement).style.borderColor = '#2a2a2a';
 				}}
 			>
-				Back to Home
+				Shop More
 			</button>
 
 			<style>{`
