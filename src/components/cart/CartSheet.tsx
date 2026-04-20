@@ -9,6 +9,8 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 import CartItemsGrid from './CartItemsGrid';
 import CartSummary from './CartSummary';
 import useSheetFlow from '@/hooks/useSheetFlow';
@@ -18,6 +20,7 @@ import { NoRefundNotice } from '../checkout/NoRefundNotice';
 import { CheckoutForm } from '../checkout/CheckOutForm';
 import CartButton from '../navbar/CartButton';
 import { useCartCount, useCartTotal } from '@/store/cart.selectors';
+import { useState } from 'react';
 
 export default function CartSheet() {
 	const {
@@ -25,7 +28,6 @@ export default function CartSheet() {
 		setSheetStatus,
 		placedOrderId,
 		pendingData,
-		items,
 		setOrderPlaced,
 		setPendingData,
 		setPlacedOrderId,
@@ -34,9 +36,20 @@ export default function CartSheet() {
 	const total = useCartTotal();
 	const itemsCount = useCartCount();
 
+	const [open, setOpen] = useState(false);
+	const onOpenChange = (open: boolean) => {
+		setOpen(open);
+		if (!open) closeSheet();
+	};
+
+	const closeSheet = () => {
+		setOpen(false);
+		setSheetStatus('cart');
+	};
+
 	return (
 		<div className="flex flex-wrap gap-2">
-			<Sheet>
+			<Sheet open={open} onOpenChange={onOpenChange}>
 				<SheetTrigger asChild>
 					<CartButton />
 				</SheetTrigger>
@@ -93,6 +106,7 @@ export default function CartSheet() {
 							totalAmount={total}
 							itemCount={itemsCount}
 							setSheetStatus={setSheetStatus}
+							closeSheet={closeSheet}
 						/>
 						<SheetFooter></SheetFooter>
 					</SheetContent>
