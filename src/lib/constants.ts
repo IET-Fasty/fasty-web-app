@@ -138,3 +138,7 @@ export const ROOM_NUMBERS = [
 	'F1',
 	'F2',
 ] as const;
+
+export const LOCAL_STORAGE_KEYS = {
+	ROOM_NUMBER: 'room_number',
+};

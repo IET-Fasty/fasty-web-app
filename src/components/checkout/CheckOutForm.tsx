@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,6 +16,8 @@ import { useUser } from '@clerk/nextjs';
 import { profileIdFromClerkId, placeOrder, insertOrderItems } from '@/services/checkout.services';
 import useCartStore from '@/store/cart.store';
 import { useCartCount, useCartTotal } from '@/store/cart.selectors';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { LOCAL_STORAGE_KEYS } from '@/lib/constants';
 
 const formSchema = z.object({
 	roomNo: z.enum(ROOM_NUMBERS),
@@ -45,6 +47,17 @@ export const CheckoutForm = ({
 	const { items } = useCartStore();
 	const total = useCartTotal();
 	const itemsCount = useCartCount();
+	const { getItem, setItem } = useLocalStorage();
+	const roomNumRef = useRef<HTMLInputElement | null>(null);
+
+	useEffect(() => {
+		if (!roomNumRef.current) return;
+
+		const savedRoomNumber = getItem(LOCAL_STORAGE_KEYS.ROOM_NUMBER);
+		if (savedRoomNumber) {
+			roomNumRef.current.value = savedRoomNumber;
+		}
+	}, [roomNumRef]);
 
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
@@ -64,6 +77,7 @@ export const CheckoutForm = ({
 		setError('');
 		setPendingData(data);
 		setShowConfirm(true);
+		setItem(LOCAL_STORAGE_KEYS.ROOM_NUMBER, roomNo);
 	};
 
 	// Step 2 - actually place the order
@@ -103,6 +117,7 @@ export const CheckoutForm = ({
 								<FormControl>
 									<Input
 										{...field}
+										ref={roomNumRef}
 										type="text"
 										id="roomNo"
 										placeholder="Enter room number"
