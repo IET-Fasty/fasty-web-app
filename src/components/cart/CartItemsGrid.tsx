@@ -3,10 +3,14 @@ import useCartStore from '@/store/cart.store';
 import CartItem from './CartItem';
 import CartEmpty from './CartEmpty';
 
-export default function CartItemsGrid() {
+interface CartItemsGridProps {
+	closeSheet: () => void;
+}
+
+export default function CartItemsGrid({ closeSheet }: CartItemsGridProps) {
 	const { items } = useCartStore();
 
-	if (items.length === 0) return <CartEmpty />;
+	if (items.length === 0) return <CartEmpty closeSheet={closeSheet} />;
 
 	return (
 		<div className="flex flex-col overflow-y-auto overflow-x-hidden">

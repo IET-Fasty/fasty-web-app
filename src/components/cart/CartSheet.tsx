@@ -65,7 +65,7 @@ export default function CartSheet() {
 							<SheetDescription>Your cart items</SheetDescription>
 						</SheetHeader>
 
-						<CartItemsGrid />
+						<CartItemsGrid closeSheet={closeSheet} />
 
 						<SheetFooter className="px-2 pb-3 pt-0">
 							<CartSummary setSheetStatus={setSheetStatus} />
