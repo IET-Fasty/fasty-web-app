@@ -25,6 +25,7 @@ const AutoCad = () => {
 	const [isSenior, setIsSenior] = useState(false);
 	const [isBuying, setIsBuying] = useState(false);
 	const [isLoadingHasBought, setIsLoadingHasBought] = useState(true);
+	const [isFromOtherBranch, setIsFromOtherBranch] = useState(false);
 
 	const isMobile = useIsMobile();
 
@@ -41,6 +42,15 @@ const AutoCad = () => {
 			setIsSenior(true);
 		} else {
 			setIsSenior(false);
+		}
+
+		const rollNo = email.split('@')[0];
+		const branchCode = rollNo.substring(7, 11);
+
+		if (['1000', '1001', '0000', '5100'].includes(branchCode)) {
+			setIsFromOtherBranch(false);
+		} else {
+			setIsFromOtherBranch(true);
 		}
 	}, [user, isSignedIn, isLoaded]);
 
@@ -129,7 +139,7 @@ const AutoCad = () => {
 
 					{isMobile ? (
 						<Drawer open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
-							{isLoaded && (
+							{isLoaded && !isFromOtherBranch && (
 								<Trigger
 									isDrawer={false}
 									hasBought={hasBought}
@@ -159,7 +169,7 @@ const AutoCad = () => {
 						</Drawer>
 					) : (
 						<Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
-							{isLoaded && (
+							{isLoaded && !isFromOtherBranch && (
 								<Trigger
 									isDrawer={false}
 									hasBought={hasBought}
